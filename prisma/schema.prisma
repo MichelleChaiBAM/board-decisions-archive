@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Subject {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  decisions Decision[]
+}
+
+model Decision {
+  id            String    @id @default(cuid())
+  decisionDate  DateTime
+  title         String
+  keywords      String
+  description   String    @db.Text
+  customSubject String?
+  createdBy     String    @default("michelle.c@bam.org.my")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  subjects      Subject[]
+
+  @@index([decisionDate])
+  @@index([createdBy])
+}

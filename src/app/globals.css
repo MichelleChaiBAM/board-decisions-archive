@@ -1,0 +1,104 @@
+@import "tailwindcss";
+@import "react-day-picker/style.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Official Badminton Association of Malaysia brand palette */
+  --color-brand-blue: #003087;
+  --color-brand-red: #c8102e;
+  --color-brand-gold: #f2c400;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  /* Primary = BAM deep blue */
+  --primary: #003087;
+  --primary-foreground: #ffffff;
+
+  /* Secondary = soft blue chip (used for subject tags / secondary buttons) */
+  --secondary: #e7edf8;
+  --secondary-foreground: #003087;
+
+  --muted: #f1f5f9;
+  --muted-foreground: #5b6b85;
+
+  /* Accent = BAM gold (subtle highlight/hover surfaces) */
+  --accent: #fdf0c2;
+  --accent-foreground: #6b5200;
+
+  /* Destructive = BAM red so delete actions harmonize with the palette */
+  --destructive: #c8102e;
+
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #003087;
+}
+
+.dark {
+  --background: #0b1220;
+  --foreground: #e6ecf7;
+  --card: #111c33;
+  --card-foreground: #e6ecf7;
+  --popover: #111c33;
+  --popover-foreground: #e6ecf7;
+
+  --primary: #3f6fd6;
+  --primary-foreground: #ffffff;
+
+  --secondary: #1c2942;
+  --secondary-foreground: #cdd9f0;
+
+  --muted: #1c2942;
+  --muted-foreground: #93a1bd;
+
+  --accent: #3a3105;
+  --accent-foreground: #f2c400;
+
+  --destructive: #e4415a;
+
+  --border: #26334d;
+  --input: #26334d;
+  --ring: #3f6fd6;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
