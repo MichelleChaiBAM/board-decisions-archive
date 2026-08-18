@@ -15,17 +15,31 @@ model Subject {
 }
 
 model Decision {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   decisionDate  DateTime
   title         String
   keywords      String
-  description   String    @db.Text
+  description   String       @db.Text
   customSubject String?
-  createdBy     String    @default("michelle.c@bam.org.my")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdBy     String       @default("michelle.c@bam.org.my")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   subjects      Subject[]
+  attachments   Attachment[]
 
   @@index([decisionDate])
   @@index([createdBy])
+}
+
+model Attachment {
+  id         String   @id @default(cuid())
+  decisionId String
+  decision   Decision @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  fileName   String
+  mimeType   String
+  sizeBytes  Int
+  storageKey String
+  createdAt  DateTime @default(now())
+
+  @@index([decisionId])
 }

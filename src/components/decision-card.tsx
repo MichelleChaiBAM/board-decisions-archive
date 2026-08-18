@@ -1,7 +1,7 @@
 "use client";
 
 import type { DecisionWithSubjects } from "@/lib/decisions";
-import { Calendar, ChevronRight } from "lucide-react";
+import { Calendar, ChevronRight, Paperclip } from "lucide-react";
 import { SubjectBadges } from "@/components/subject-badges";
 import { DeleteDecisionButton } from "@/components/delete-decision-button";
 import {
@@ -63,6 +63,12 @@ export function DecisionCard({
         <CardDescription className="flex items-center gap-1.5">
           <Calendar className="h-3.5 w-3.5" />
           {formatDate(decision.decisionDate)}
+          {decision.attachments.length > 0 && (
+            <span className="ml-2 inline-flex items-center gap-1 text-muted-foreground">
+              <Paperclip className="h-3.5 w-3.5" />
+              {decision.attachments.length}
+            </span>
+          )}
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -3,6 +3,7 @@
 import type { DecisionWithSubjects } from "@/lib/decisions";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Paperclip } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -66,7 +67,17 @@ export function DecisionTable({
                 <TableCell className="text-muted-foreground">
                   {formatDate(decision.decisionDate)}
                 </TableCell>
-                <TableCell className="font-medium">{decision.title}</TableCell>
+                <TableCell className="font-medium">
+                  <span className="inline-flex items-center gap-2">
+                    {decision.title}
+                    {decision.attachments.length > 0 && (
+                      <Paperclip
+                        className="h-3.5 w-3.5 shrink-0 text-muted-foreground"
+                        aria-label={`${decision.attachments.length} PDF attachments`}
+                      />
+                    )}
+                  </span>
+                </TableCell>
                 <TableCell>
                   <SubjectBadges decision={decision} maxVisible={2} />
                 </TableCell>

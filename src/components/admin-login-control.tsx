@@ -77,8 +77,8 @@ export function AdminLoginControl({ className }: { className?: string }) {
         <DialogHeader>
           <DialogTitle>Administrator sign in</DialogTitle>
           <DialogDescription>
-            Only the archive administrator can delete decisions. Sign in with
-            your admin email (e.g. {adminEmailHint}).
+            Only the archive administrator can delete decisions and attach PDF
+            files. Sign in with your admin email (e.g. {adminEmailHint}).
           </DialogDescription>
         </DialogHeader>
         <form

@@ -27,7 +27,7 @@ export async function loginAdminAction(email: string) {
   if (normalized !== getAdminEmail()) {
     return {
       success: false as const,
-      error: "Only administrators can sign in to manage deletions.",
+      error: "Only administrators can sign in to manage the archive.",
     };
   }
 

@@ -2,9 +2,11 @@ import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
 import { OTHERS_SUBJECT } from "@/lib/subjects";
 import { ANONYMOUS_USER_EMAIL } from "@/lib/auth";
+import { deleteStoredFile, type StoredPdf } from "@/lib/pdf-attachments";
 
 export const decisionInclude = {
   subjects: { orderBy: { name: "asc" as const } },
+  attachments: { orderBy: { fileName: "asc" as const } },
 } satisfies Prisma.DecisionInclude;
 
 export type DecisionWithSubjects = Prisma.DecisionGetPayload<{
@@ -153,10 +155,16 @@ export type CreateDecisionInput = {
   keywords: string;
   description: string;
   createdBy?: string;
+  attachments?: StoredPdf[];
 };
 
 export async function deleteDecision(id: string): Promise<void> {
-  // Implicit many-to-many junction rows are removed automatically by Prisma
+  const attachments = await prisma.attachment.findMany({
+    where: { decisionId: id },
+    select: { storageKey: true },
+  });
+
+  await Promise.all(attachments.map((file) => deleteStoredFile(file.storageKey)));
   await prisma.decision.delete({ where: { id } });
 }
 
@@ -177,8 +185,15 @@ export async function createDecision(
           ? input.customSubject.trim()
           : null,
       subjects: {
-        connect: input.subjectNames.map((name) => ({ name })),
+        connectOrCreate: input.subjectNames.map((name) => ({
+          where: { name },
+          create: { name },
+        })),
       },
+      attachments:
+        input.attachments && input.attachments.length > 0
+          ? { create: input.attachments }
+          : undefined,
     },
     include: decisionInclude,
   });

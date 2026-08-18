@@ -45,13 +45,14 @@ git push -u origin main
 2. Framework preset: **Next.js** (auto-detected).
 3. Before deploying, add the **Environment Variables** below.
 
-### Environment variables (add all three)
+### Environment variables (add all four)
 
-| Name           | Value                                                        |
-| -------------- | ------------------------------------------------------------ |
-| `DATABASE_URL` | your pooled Postgres URL                                     |
-| `DIRECT_URL`   | your direct Postgres URL                                     |
-| `ADMIN_EMAIL`  | `michelle.c@bam.org.my` (only this user can delete)          |
+| Name                     | Value                                                        |
+| ------------------------ | ------------------------------------------------------------ |
+| `DATABASE_URL`           | your pooled Postgres URL                                     |
+| `DIRECT_URL`             | your direct Postgres URL                                     |
+| `ADMIN_EMAIL`            | `michelle.c@bam.org.my` (only this user can delete / attach PDFs) |
+| `BLOB_READ_WRITE_TOKEN`  | Vercel Blob read/write token (required for PDF attachments)  |
 
 The build command already runs migrations automatically:
 
@@ -87,7 +88,16 @@ https://board-decisions-archive.vercel.app
 ```
 
 Anyone with that link can **search, browse, and add** decisions.
-Only the person who signs in with `ADMIN_EMAIL` can **delete**.
+Only the person who signs in with `ADMIN_EMAIL` can **delete** decisions
+and **attach PDF files**.
+
+### PDF attachments (Vercel Blob)
+
+1. In the Vercel dashboard, open your project → **Storage** → **Create Database** → **Blob**.
+2. Connect the store to this project so `BLOB_READ_WRITE_TOKEN` is added automatically.
+3. Redeploy after connecting Blob.
+
+Without this token, PDF uploads are not available in production.
 
 ---
 

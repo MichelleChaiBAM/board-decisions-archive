@@ -43,3 +43,6 @@ next-env.d.ts
 # prisma
 /prisma/*.db
 /prisma/*.db-journal
+
+# local PDF uploads (production uses Vercel Blob)
+/uploads

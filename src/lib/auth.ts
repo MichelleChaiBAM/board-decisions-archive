@@ -45,6 +45,19 @@ export type DeleteAuthorizationResult =
   | { allowed: true }
   | { allowed: false; reason: string };
 
+export async function authorizeAdmin(): Promise<DeleteAuthorizationResult> {
+  const session = await getSession();
+
+  if (!session.isAdmin) {
+    return {
+      allowed: false,
+      reason: "Only administrators can perform this action.",
+    };
+  }
+
+  return { allowed: true };
+}
+
 /**
  * Only the configured administrator may delete decisions.
  * Extend with role-based checks when full auth is added.
